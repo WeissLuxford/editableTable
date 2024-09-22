@@ -18,8 +18,10 @@ td[contenteditable="true"] {
     background-color: #f0f0f0;
 }
 .delete-btn {
-    background-color: red;
+    background-color: #e23f3f;
     color: white;
     border: none;
     cursor: pointer;
+    padding: 10px 15px;
+    border-radius: 5px;
 }
