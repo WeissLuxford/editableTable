@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Бухгалтерская Таблица</title>
+</head>
+<body>
+    <h1>Бухгалтерская Таблица</h1>
+    <div>
+        <label for="month">Месяц: </label>
+        <input type="date" id="datePicker">
+    </div>
+    <div>
+        <label for="ndflRate">Ставка НДФЛ: </label>
+        <input type="number" id="ndflRate" placeholder="12" step="1">
+    </div>
+
+    <table id="accountingTable">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>ФИО</th>
+                <th>Должность</th>
+                <th>Рабочие дни</th>
+                <th>Отработанные дни</th>
+                <th>Оклад</th>
+                <th>Зарплата</th>
+                <th>Больничный</th>
+                <th>Отпускные</th>
+                <th>Премии</th>
+                <th>Итого начислено</th>
+                <th>НДФЛ</th>
+                <th>ИНПС</th>
+                <th>Удержания</th>
+                <th>Сумма на руку</th>
+                <th>Удалить строку</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Пустая строка для ввода данных -->
+            <tr>
+                <td>1</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td><button class="delete-btn" onclick="deleteRow(this)">Удалить</button></td>
+            </tr>
+            <!-- Строка для итогов -->
+            <tr class="total-row">
+                <td colspan="3">Итого:</td>
+                <td id="total-working-days"></td>
+                <td id="total-worked-days"></td>
+                <td id="total-salary"></td>
+                <td id="total-calculated-salary"></td>
+                <td id="total-sick-leave"></td>
+                <td id="total-vacation-pay"></td>
+                <td id="total-bonuses"></td>
+                <td id="total-accrued"></td>
+                <td id="total-ndfl"></td>
+                <td id="total-inps"></td>
+                <td id="total-deductions"></td>
+                <td id="total-hand-sum"></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+    <button onclick="addRow()">Добавить строку</button>
+
+    <script src="script.js"></script>
+</body>
+</html>
