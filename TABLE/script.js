@@ -234,6 +234,11 @@ function bindCellEvents(cell) {
     cell.addEventListener('input', function () {
         const rawValue = removeSpaces(this.textContent);  // Убираем пробелы
 
+        // Пропускаем removeSpaces для первых трёх столбцов
+        if (columnIndex >= 3) {
+            rawValue = removeSpaces(rawValue);
+        }
+
         const cursorPosition = getCaretPosition(this);  // Сохраняем текущее положение курсора до форматирования
         const valueBeforeFormatting = this.textContent.length;  // Длина значения до форматирования
 
