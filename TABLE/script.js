@@ -43,31 +43,6 @@ function bindCellEvents(cell) {
     });
 }
 
-// Добавление новой строки
-function addRow() {
-    const table = document.getElementById('accountingTable').getElementsByTagName('tbody')[0];
-    const rowCount = table.rows.length;
-    const row = table.insertRow(rowCount - 1);  // Вставляем перед строкой "Итого"
-
-    for (let i = 0; i < 16; i++) {
-        const cell = row.insertCell(i);
-        if (i === 15) {
-            // Кнопка "Удалить"
-            const btn = document.createElement('button');
-            btn.textContent = 'Удалить';
-            btn.className = 'delete-btn';
-            btn.onclick = function() { deleteRow(this); };
-            cell.appendChild(btn);
-        } else {
-            // Все остальные ячейки
-            cell.contentEditable = "true";
-            bindCellEvents(cell);  // Привязываем обработчики событий к новым ячейкам
-        }
-    }
-
-    // Обновляем нумерацию строк
-    updateRowNumbers();
-}
 
 // Удаление строки
 function deleteRow(button) {
@@ -89,8 +64,8 @@ function updateRowNumbers() {
 }
 
 // Инициализация всех ячеек для вычислений
-document.querySelectorAll('#accountingTable tbody td[contenteditable="true"]').forEach(cell => {
-    bindCellEvents(cell);
+document.querySelectorAll('#accountingTable tbody td[contenteditable="true"]').forEach((cell, index) => {
+    bindCellEvents(cell, index);  // Привязываем события с указанием индекса столбца
 });
 
 // Функция для обновления значений в столбцах 7 (Зарплата) и 11 (Итого начислено)
@@ -171,17 +146,20 @@ function addRow() {
 
     for (let i = 0; i < 16; i++) {
         const cell = row.insertCell(i);
-        if (i === 15) {
+        if (i === 0) {
+            // Первая ячейка (нумерация строк) не редактируемая
+            cell.contentEditable = "false";
+        } else if (i === 15) {
             // Кнопка "Удалить"
             const btn = document.createElement('button');
-            btn.textContent = 'Удалить';
+            btn.textContent = 'x';
             btn.className = 'delete-btn';
             btn.onclick = function() { deleteRow(this); };
             cell.appendChild(btn);
         } else {
             // Все остальные ячейки
             cell.contentEditable = "true";
-            bindCellEvents(cell);  // Привязываем обработчики событий к новым ячейкам
+            bindCellEvents(cell, i);  // Привязываем обработчики событий к новым ячейкам с указанием индекса столбца
         }
     }
 
@@ -230,14 +208,21 @@ function setCaretPosition(element, position) {
 }
 
 // Привязываем обработчики событий на редактируемые ячейки
-function bindCellEvents(cell) {
+function bindCellEvents(cell, columnIndex) {
     cell.addEventListener('input', function () {
-        const rawValue = removeSpaces(this.textContent);  // Убираем пробелы
+        // Для столбцов "ФИО" и "Должность" (например, столбцы 1 и 2) не удаляем пробелы
+        if (columnIndex == 1 || columnIndex == 2) {
+            // Просто обновляем строки, не форматируя текст
+            updateAllRows();
+            return;
+        }
+
+        const rawValue = removeSpaces(this.textContent);  // Убираем пробелы для всех других столбцов
 
         const cursorPosition = getCaretPosition(this);  // Сохраняем текущее положение курсора до форматирования
         const valueBeforeFormatting = this.textContent.length;  // Длина значения до форматирования
 
-        this.textContent = formatNumberWithSpaces(rawValue);  // Форматируем с пробелами
+        this.textContent = formatNumberWithSpaces(rawValue);  // Форматируем с пробелами для чисел
 
         const valueAfterFormatting = this.textContent.length;  // Длина значения после форматирования
         const newCursorPosition = cursorPosition + (valueAfterFormatting - valueBeforeFormatting);  // Корректируем позицию курсора
@@ -267,3 +252,5 @@ function setTodayDate() {
 window.onload = function() {
     setTodayDate();
 };
+
+addRow()
