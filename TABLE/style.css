@@ -20,12 +20,39 @@ body{
   background-color: var(--h2o);
 }
 
-.topMenuInput{
-  max-width: fit-content;
+.container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 1700px;
   width: 100%;
   margin: 0 auto;
 }
 
+.topMenuInput{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 5px auto;
+}
+
+.topMenuInput input{
+  border: 0px;
+  background-color: rgba(244, 244, 244, 0.721);
+  padding: 5px;
+  border: 1px solid grey;
+  border-radius: 5px;
+  text-align: center;
+  color: var(--army);
+  font-weight: 500;
+  margin-left: 10px;
+}
+
+input{
+  transition: all 0.1s ease-in-out;
+}
 
 
 table {
@@ -65,12 +92,19 @@ td{
   margin: 2.5px 0;
 }
 
+input:focus-visible,
+td:focus-visible{
+  outline: 1px solid transparent;
+  box-shadow: inset 0px 2px 5px -1px black;
+}
+
+
 td:last-of-type,
 th:last-of-type{
   width: auto;
   position: absolute;
-  top: 0.6rem;
-  right: 2rem;
+  top: 1%;
+  right: 2%;
   background: transparent !important;
   border: 0px solid transparent !important;
   box-shadow: none;
